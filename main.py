@@ -4,7 +4,6 @@ from statistics_calculator import StatisticsCalculator
 from redis_conector import RedisConector
 
 import time
-import keyboard
 
 class Main: 
     def __init__(self):
@@ -37,10 +36,6 @@ class Main:
                 print(mean_humidity, std_humidity, max_humidity, min_humidity)
                 
                 time.sleep(3)
-                
-                if keyboard.is_pressed('q'):
-                    print("Saliendo del programa")
-                    self.is_running = False
 
         finally:
             csv_reader.close_file()
