@@ -14,8 +14,8 @@ class CSVReader:
             self.file.close()
 
     def read_file(self):
-       if self.file:
-            reader = csv.reader(self.file) 
+        if self.file:
+            reader = csv.reader(self.file)
             for row in reader:
                 data_type, value, timestamp = self.decode_data(row)
                 print(data_type, value, timestamp)
@@ -23,28 +23,28 @@ class CSVReader:
                 # y enviar los datos a la base de datos y a la calculadora de estadísticas
     
     def get_humedad(self):
-        # solo leer la ultima linea del archivo
         if self.file:
-            last_line = self.file.readlines()[-1]
-            last_line = last_line.split(",")
-            #quitamos el salto de linea
-            last_line[-1] = last_line[-1].replace("\n", "")
-            data_type, value, timestamp = self.decode_data(last_line)
-            return data_type, value, timestamp
-        else:
-            return 0, 0, 0
+            self.file.seek(0)  # Reiniciar la posición del archivo al inicio
+            lines = self.file.readlines()
+            if len(lines) > 0:
+                last_line = lines[-1]
+                last_line = last_line.split(",")
+                last_line[-1] = last_line[-1].replace("\n", "")
+                data_type, value, timestamp = self.decode_data(last_line)
+                return data_type, value, timestamp
+        return 0, 0, 0
 
     def get_temperatura(self):
-        # solo leer la antepenultima linea del archivo
         if self.file:
-            last_line = self.file.readlines()[-2]
-            last_line = last_line.split(",")
-            #quitamos el salto de linea
-            last_line[-1] = last_line[-1].replace("\n", "")
-            data_type, value, timestamp = self.decode_data(last_line)
-            return data_type, value, timestamp
-        else:
-            return 0, 0, 0
+            self.file.seek(0)  # Reiniciar la posición del archivo al inicio
+            lines = self.file.readlines()
+            if len(lines) > 1:
+                antepenultimate_line = lines[-2]
+                antepenultimate_line = antepenultimate_line.split(",")
+                antepenultimate_line[-1] = antepenultimate_line[-1].replace("\n", "")
+                data_type, value, timestamp = self.decode_data(antepenultimate_line)
+                return data_type, value, timestamp
+        return 0, 0, 0
     
     def decode_data(self, data):
         data_type = data[0]
