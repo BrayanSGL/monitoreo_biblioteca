@@ -1,15 +1,23 @@
 import redis 
 import time
+import json
 
-r = redis.Redis(
+servidor = redis.Redis(
     host ='redis-15497.c44.us-east-1-2.ec2.cloud.redislabs.com',
     port=15497,
     password='nQ8NJJBVdusp18Y7o5ApPbUirlO5NshT')
 
-ts = r.ts()
-ts.create("pureba")
+local = redis.Redis(
+    host ='localhost',
+    port=6379,
+    password='')
 
-for i in range(100):
-    ts.add("prueba", "*",i)
-    time.sleep(1)
-    
+def main():
+    while True:
+        msg = local.blpop('cola') # bloquea hasta que llegue un mensaje 
+        print(msg) # (b'cola', b'{"nombre": "Juan", "edad": 20}')
+        local.rpush('cola', msg[1]) #rpsh: inserta un elemento al final de la lista
+        time.sleep(1)
+
+if __name__ == '__main__':
+    main()
