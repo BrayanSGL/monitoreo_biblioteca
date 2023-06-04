@@ -4,17 +4,16 @@ from statistics_calculator import StatisticsCalculator
 from redis_conector import RedisConector
 
 import time
+import keyboard
 
 class Main: 
     def __init__(self):
-        pass
+        self.is_running = True
 
     def main(self):
         # crear instancias
         csv_reader = CSVReader(CSV_PATH)
-        #time_series_db = TimeSeriesDatabase('localhost', 6379)
         statistics_calculator = StatisticsCalculator(CSV_PATH)
-        #grafana_connector = GrafanaConnector('localhost', 3000)
         redis_conector = RedisConector(HOST, PORT, PASSWORD)
         redis_conector.connect()
         redis_conector.create_time_series('temp')
@@ -22,12 +21,12 @@ class Main:
         
         try:
 
-            while True:
+            while self.is_running:
                 statistics_calculator.load_statistics()
                 csv_reader.open_file()
                 data_type, value, timestamp = csv_reader.get_data()
 
-                #redis_conector.add_data_time_series(data_type, value)
+                redis_conector.add_data_time_series(data_type, value)
 
                 print(data_type, value, timestamp)
                 
@@ -38,6 +37,10 @@ class Main:
                 print(mean_humidity, std_humidity, max_humidity, min_humidity)
                 
                 time.sleep(3)
+                
+                if keyboard.is_pressed('q'):
+                    print("Saliendo del programa")
+                    self.is_running = False
 
         finally:
             csv_reader.close_file()
