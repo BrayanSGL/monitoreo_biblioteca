@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 
 
@@ -21,10 +20,10 @@ class StatisticsCalculator:
         
         if temperature.empty:
             # No hay valores de temperatura en el DataFrame
-            self.mean_temperature = np.nan
-            self.std_temperature = np.nan
-            self.max_temperature = np.nan
-            self.min_temperature = np.nan
+            self.mean_temperature = 0
+            self.std_temperature = 0
+            self.max_temperature = 0
+            self.min_temperature = 0
         else:
             # Calculamos las estadísticas
             statistics = temperature['value'].describe()
@@ -41,10 +40,10 @@ class StatisticsCalculator:
         
         if humidity.empty:
             # No hay valores de temperatura en el DataFrame
-            self.mean_humidity = np.nan
-            self.std_humidity = np.nan
-            self.max_humidity = np.nan
-            self.min_humidity = np.nan
+            self.mean_humidity = 0
+            self.std_humidity = 0
+            self.max_humidity = 0
+            self.min_humidity = 0
         else:
             # Calculamos las estadísticas
             statistics = humidity['value'].describe()
