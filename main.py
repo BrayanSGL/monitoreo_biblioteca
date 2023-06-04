@@ -34,9 +34,13 @@ class Main:
             while self.is_running:
                 statistics_calculator.load_statistics()
                 csv_reader.open_file()
-                data_type, value, timestamp = csv_reader.get_data()
 
-                redis_conector.add_data_time_series(data_type, value)
+                #tempetura real time
+                data_type_t, value_t, timestamp_t = csv_reader.get_temperatura()
+                redis_conector.add_data_time_series(data_type_t, value_t)
+                #humedad real time
+                data_type_h, value_h, timestamp_h = csv_reader.get_humedad()
+                redis_conector.add_data_time_series(data_type_h, value_h)
 
                 
                 mean_temperature, std_temperature, max_temperature, min_temperature = statistics_calculator.calculate_statistics_temperature()
@@ -52,7 +56,8 @@ class Main:
                 redis_conector.add_data_time_series('hume_max', max_humidity)
                 redis_conector.add_data_time_series('hume_min', min_humidity)
 
-                print(data_type, value, timestamp)
+                print(data_type_t, value_t, timestamp_t)
+                print(data_type_h, value_h, timestamp_h)
                 print(mean_temperature, std_temperature, max_temperature, min_temperature)
                 print(mean_humidity, std_humidity, max_humidity, min_humidity)
                 

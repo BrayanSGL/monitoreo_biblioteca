@@ -22,7 +22,7 @@ class CSVReader:
                 # Aquí puedes realizar la decodificación de acuerdo a tus necesidades
                 # y enviar los datos a la base de datos y a la calculadora de estadísticas
     
-    def get_data(self):
+    def get_humedad(self):
         # solo leer la ultima linea del archivo
         if self.file:
             last_line = self.file.readlines()[-1]
@@ -32,8 +32,19 @@ class CSVReader:
             data_type, value, timestamp = self.decode_data(last_line)
             return data_type, value, timestamp
         else:
-            return None, None, None
+            return 0, 0, 0
 
+    def get_temperatura(self):
+        # solo leer la antepenultima linea del archivo
+        if self.file:
+            last_line = self.file.readlines()[-2]
+            last_line = last_line.split(",")
+            #quitamos el salto de linea
+            last_line[-1] = last_line[-1].replace("\n", "")
+            data_type, value, timestamp = self.decode_data(last_line)
+            return data_type, value, timestamp
+        else:
+            return 0, 0, 0
     
     def decode_data(self, data):
         data_type = data[0]
