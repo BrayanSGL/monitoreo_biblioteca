@@ -1,0 +1,32 @@
+# Ignorar archivos y directorios generados por Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyz
+*.pyw
+*.pyz/
+*.pyw/
+venv/
+
+# Ignorar archivos generados por el entorno de desarrollo
+.idea/
+.vscode/
+
+# Ignorar archivos de registro y registros de errores
+*.log
+logs/
+
+# Ignorar archivos de configuración local
+config.ini
+
+# Ignorar archivos generados por Redis
+*.rdb
+*.aof
+
+# Ignorar archivos generados por Grafana
+grafana.db
+
+# Ignorar archivos de dependencias y entorno virtual
+venv/
+env/
