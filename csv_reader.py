@@ -38,6 +38,6 @@ class CSVReader:
     def decode_data(self, data):
         data_type = data[0]
         value = float(data[1])
-        timestamp = datetime.fromisoformat(data[2])
+        timestamp = datetime.fromisoformat(data[2].replace("Z", "+00:00"))
         timestamp = timestamp.strftime("%Y-%m-%d %H:%M:%S")
         return data_type, value, timestamp
