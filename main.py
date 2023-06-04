@@ -42,15 +42,15 @@ class Main:
                 mean_temperature, std_temperature, max_temperature, min_temperature = statistics_calculator.calculate_statistics_temperature()
                 mean_humidity, std_humidity, max_humidity, min_humidity = statistics_calculator.calculate_statistics_humidity()
 
-                redis_conector.add_data_time_series('temp_mean', mean_temperature)
-                redis_conector.add_data_time_series('temp_std', std_temperature)
-                redis_conector.add_data_time_series('temp_max', max_temperature)
-                redis_conector.add_data_time_series('temp_min', min_temperature)
+                # redis_conector.add_data_time_series('temp_mean', mean_temperature)
+                # redis_conector.add_data_time_series('temp_std', std_temperature)
+                # redis_conector.add_data_time_series('temp_max', max_temperature)
+                # redis_conector.add_data_time_series('temp_min', min_temperature)
 
-                redis_conector.add_data_time_series('hume_mean', mean_humidity)
-                redis_conector.add_data_time_series('hume_std', std_humidity)
-                redis_conector.add_data_time_series('hume_max', max_humidity)
-                redis_conector.add_data_time_series('hume_min', min_humidity)
+                # redis_conector.add_data_time_series('hume_mean', mean_humidity)
+                # redis_conector.add_data_time_series('hume_std', std_humidity)
+                # redis_conector.add_data_time_series('hume_max', max_humidity)
+                # redis_conector.add_data_time_series('hume_min', min_humidity)
 
                 print(data_type, value, timestamp)
                 print(mean_temperature, std_temperature, max_temperature, min_temperature)
