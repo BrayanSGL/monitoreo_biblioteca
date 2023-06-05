@@ -1,0 +1,163 @@
+[
+    {
+        "id": "6c3cfc12f0421e39",
+        "type": "tab",
+        "label": "Proyecto final",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b298c92c84774b33",
+        "type": "mqtt in",
+        "z": "6c3cfc12f0421e39",
+        "name": "",
+        "topic": "sensores/temperatura_UD7744",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "836109f37e1f577c",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 80,
+        "wires": [
+            [
+                "c1a3c9ce71f27bd9",
+                "9b55135d5e736129"
+            ]
+        ]
+    },
+    {
+        "id": "c1a3c9ce71f27bd9",
+        "type": "debug",
+        "z": "6c3cfc12f0421e39",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "8c600678b0441fcd",
+        "type": "comment",
+        "z": "6c3cfc12f0421e39",
+        "name": "Comunicacion mqtt",
+        "info": "",
+        "x": 730,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "13e88596de75602c",
+        "type": "mqtt in",
+        "z": "6c3cfc12f0421e39",
+        "name": "",
+        "topic": "sensores/humedad_UD7744",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "836109f37e1f577c",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 140,
+        "wires": [
+            [
+                "c1a3c9ce71f27bd9",
+                "252b9b4733875d52"
+            ]
+        ]
+    },
+    {
+        "id": "9b55135d5e736129",
+        "type": "function",
+        "z": "6c3cfc12f0421e39",
+        "name": "function 1",
+        "func": "// Obtener los datos de temperatura\nvar temperatura = msg.payload;\n\n// Crear una instancia del objeto Date\nvar fechaActual = new Date();\n\n// Obtener la diferencia horaria en minutos para la zona horaria deseada\nvar diferenciaHoraria = -300; // Cambiar esto a la diferencia horaria en minutos para la zona horaria deseada\n\n// Ajustar la fecha y hora según la diferencia horaria\nfechaActual.setMinutes(fechaActual.getMinutes() + diferenciaHoraria);\n\n// Formatear la fecha y hora en el formato deseado (ISO 8601)\nvar fechaFormateada = fechaActual.toISOString();\n\n// Crear la cadena CSV con la temperatura y la fecha actual\nvar csvData = \"temp\" + \",\" + temperatura + \",\" + fechaFormateada;\n\n// Crear un nuevo mensaje con la cadena CSV\nmsg.payload = csvData;\n\n// Enviar el mensaje al siguiente nodo\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 140,
+        "wires": [
+            [
+                "41b832c056832b39"
+            ]
+        ]
+    },
+    {
+        "id": "252b9b4733875d52",
+        "type": "function",
+        "z": "6c3cfc12f0421e39",
+        "name": "function 2",
+        "func": "// Obtener los datos de temperatura\nvar humedad = msg.payload;\n\n// Crear una instancia del objeto Date\nvar fechaActual = new Date();\n\n// Obtener la diferencia horaria en minutos para la zona horaria deseada\nvar diferenciaHoraria = -300; // Cambiar esto a la diferencia horaria en minutos para la zona horaria deseada\n\n// Ajustar la fecha y hora según la diferencia horaria\nfechaActual.setMinutes(fechaActual.getMinutes() + diferenciaHoraria);\n\n// Formatear la fecha y hora en el formato deseado (ISO 8601)\nvar fechaFormateada = fechaActual.toISOString();\n\n// Crear la cadena CSV con la temperatura y la fecha actual\nvar csvData = \"hume\" + \",\" + humedad + \",\" + fechaFormateada;\n\n// Crear un nuevo mensaje con la cadena CSV\nmsg.payload = csvData;\n\n// Enviar el mensaje al siguiente nodo\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 200,
+        "wires": [
+            [
+                "41b832c056832b39"
+            ]
+        ]
+    },
+    {
+        "id": "41b832c056832b39",
+        "type": "file",
+        "z": "6c3cfc12f0421e39",
+        "name": "",
+        "filename": "/home/brayansgl/Documents/monitoreo_biblioteca/data.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 780,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "836109f37e1f577c",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.emqx.io",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
